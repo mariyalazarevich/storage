@@ -28,14 +28,13 @@ def handle_request(file_path):
                 for item in os.listdir(absolute_path):
                     item_path = os.path.join(absolute_path, item)
                     item_stat = os.stat(item_path)
-
                     files.append({
                         "name": item,
                         "is_dir": os.path.isdir(item_path),
                         "size": item_stat.st_size,
                         "modified": datetime.fromtimestamp(item_stat.st_mtime).isoformat()
                     })
-                return jsonify({"path": file_path, "items": files})
+                return jsonify({"path": file_path, "files": files})
             except FileNotFoundError:
                 return jsonify({"error": "Directory not found"}), 404
             except PermissionError:
